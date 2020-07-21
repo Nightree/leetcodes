@@ -1,11 +1,5 @@
 package priv.nightree.algorithm.twopointers.n680;
 
-import com.eclipsesource.json.Json;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-
 class Solution {
     public boolean validPalindrome(String s) {
         int bi=0,bj=s.length()-1;
@@ -22,7 +16,7 @@ class Solution {
                     i=bi-1;
                     j=bj;
                     diff = 2;
-                } else if (diff == 2) {
+                } else {
                     res = false;
                 }
             }
@@ -32,28 +26,7 @@ class Solution {
 }
 
 public class ValidPalindrome {
-    public static String stringToString(String input) {
-        if (input == null) {
-            return "null";
-        }
-        return Json.value(input).toString();
-    }
-
-    public static String booleanToString(boolean input) {
-        return input ? "True" : "False";
-    }
-
-    public static void main(String[] args) throws IOException {
-        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-        String line;
-        while ((line = in.readLine()) != null) {
-            String s = stringToString(line);
-
-            boolean ret = new Solution().validPalindrome(s);
-
-            String out = booleanToString(ret);
-
-            System.out.print(out);
-        }
+    public static void main(String[] args) {
+        System.out.println(new Solution().validPalindrome("abcb"));
     }
 }

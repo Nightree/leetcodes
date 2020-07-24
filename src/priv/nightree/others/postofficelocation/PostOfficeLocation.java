@@ -1,4 +1,4 @@
-package priv.nightree.others;
+package priv.nightree.others.postofficelocation;
 
 public class PostOfficeLocation {
     public static void main(String[] args) {

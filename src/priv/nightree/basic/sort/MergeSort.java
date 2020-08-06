@@ -22,13 +22,10 @@ public class MergeSort {
         int[] res = new int[left.length + right.length];
         int i = 0, j = 0, k = 0;
         while (i < left.length && j < right.length) {
-            if (left[i] < right[j]) {
+            if (left[i] <= right[j]) {
                 res[k++] = left[i++];
             } else if (left[i] > right[j]) {
                 res[k++] = right[j++];
-            } else {
-                res[k++] = right[j++];
-                res[k++] = left[i++];
             }
         }
         if (i == left.length) {

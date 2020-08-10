@@ -1,43 +1,49 @@
 package priv.nightree.swordoffer.n19;
 
 class Solution {
-    public boolean isMatch(String A, String B) {
-        int n = A.length();
-        int m = B.length();
-        boolean[][] f = new boolean[n + 1][m + 1];
-
-        for (int i = 0; i <= n; i++) {
-            for (int j = 0; j <= m; j++) {
-                //分成空正则和非空正则两种
-                if (j == 0) {
-                    f[i][j] = i == 0;
-                } else {
-                    //非空正则分为两种情况 * 和 非*
-                    if (B.charAt(j - 1) != '*') {
-                        if (i > 0 && (A.charAt(i - 1) == B.charAt(j - 1) || B.charAt(j - 1) == '.')) {
-                            f[i][j] = f[i - 1][j - 1];
+    public boolean isMatch(String s, String p) {
+        int m = s.length(), n = p.length();
+        boolean[][] dp = new boolean[m + 1][n + 1];
+        //n.charAt为'*':
+        // 前一个匹配：dp[i][j]=dp[i-1][j]||dp[i][j-2]
+        // 前一个不匹配：dp[i][j]=dp[i][j-2]
+        for (int i = 0; i <= m; i++) {
+            for (int j = 0; j <= n; j++) {
+                if (i == 0 && j == 0) {
+                    dp[i][j] = true;
+                }
+                if (i == 1 && j == 1) {
+                    if (p.charAt(0) == s.charAt(0) || p.charAt(0) == '.') {
+                        dp[1][1] = true;
+                    }
+                }
+                if (j > 1) {
+                    if (p.charAt(j - 1) == '*') {
+                        if (i > 0 && (p.charAt(j - 2) == s.charAt(i - 1) || p.charAt(j - 2) == '.')) {
+                            dp[i][j] = dp[i - 1][j] || dp[i][j - 2];
+                        } else {
+                            dp[i][j] = dp[i][j - 2];
                         }
                     } else {
-                        //碰到 * 了，分为看和不看两种情况
-                        //不看
-                        if (j >= 2) {
-                            f[i][j] |= f[i][j - 2];
-                        }
-                        //看
-                        if (i >= 1 && j >= 2 && (A.charAt(i - 1) == B.charAt(j - 2) || B.charAt(j - 2) == '.')) {
-                            f[i][j] |= f[i - 1][j];
+                        if (i > 0 && (p.charAt(j - 1) == s.charAt(i - 1) || p.charAt(j - 1) == '.')) {
+                            dp[i][j] = dp[i - 1][j - 1];
                         }
                     }
                 }
             }
         }
-        return f[n][m];
+        return dp[m][n];
     }
 }
 
 public class N19 {
     public static void main(String[] args) {
-        System.out.println(new Solution().isMatch("abbcc","a.*bb.*cc"));
-        System.out.println(new Solution().isMatch("saxxxxbexxxee", "sc*a.*be.*ee"));
+        System.out.println(new Solution().isMatch("aa", "a"));//false
+        System.out.println(new Solution().isMatch("aaaaaaaaaaaaab", "a*a*a*a*a*a*a*a*a*a*c"));//false
+        System.out.println(new Solution().isMatch("a", "ab*"));//true
+        System.out.println(new Solution().isMatch("aa", "a*"));//true
+        System.out.println(new Solution().isMatch("ab", ".*"));//true
+        System.out.println(new Solution().isMatch("abbcc", "a.*bb.*cc"));//true
+        System.out.println(new Solution().isMatch("saxxxxbexxxee", "sc*a.*be.*ee"));//true
     }
 }

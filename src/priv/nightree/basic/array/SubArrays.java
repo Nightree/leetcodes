@@ -13,10 +13,10 @@ public class SubArrays {
     }
 
     public static void findSubArray(int[] arr, int k, List<Integer> temp, List<List<Integer>> res) {
-        res.add(new ArrayList<>(temp));
-//        if (temp.size() == 1) {
-//            return;
-//        }
+        if (temp.size() == 2) {
+            res.add(new ArrayList<>(temp));
+            return;
+        }
         for (int i = k; i >= 0; i--) {
             temp.add(arr[i]);
             findSubArray(arr, i - 1, temp, res);

@@ -3,18 +3,18 @@ package priv.nightree.basic.sort;
 public class MergeSort {
     public static void main(String[] args) {
         int[] arr = {3, 2, 5, 7, 6, 1, 9};
-        for (int i : merge(arr, 0, arr.length - 1)) {
+        for (int i : merge(arr, 0, arr.length)) {
             System.out.println(i);
         }
     }
 
     public static int[] merge(int[] arr, int start, int end) {
-        if (start == end) {
+        if (start == end - 1) {
             return new int[]{arr[start]};
         }
         int mid = start + (end - start) / 2;
         int[] left = merge(arr, start, mid);
-        int[] right = merge(arr, mid + 1, end);
+        int[] right = merge(arr, mid, end);
         return connect(left, right);
     }
 
@@ -28,15 +28,11 @@ public class MergeSort {
                 res[k++] = right[j++];
             }
         }
-        if (i == left.length) {
-            while (j < right.length) {
-                res[k++] = right[j++];
-            }
+        while (j < right.length) {
+            res[k++] = right[j++];
         }
-        if (j == right.length) {
-            while (i < left.length) {
-                res[k++] = left[i++];
-            }
+        while (i < left.length) {
+            res[k++] = left[i++];
         }
         return res;
     }

@@ -2,7 +2,7 @@ package priv.nightree.basic.sort;
 
 public class QuickSort {
     public static void main(String[] args) {
-        int[] arr = {0, 4, 1, 1};
+        int[] arr = {4, 1, 1};
         recursion(arr, 0, arr.length);
         for (int a : arr) {
             System.out.println(a);

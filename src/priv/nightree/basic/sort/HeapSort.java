@@ -10,34 +10,34 @@ public class HeapSort {
     }
 
     public static void sort(int[] arr) {
-        //1.构建大顶堆
+        //1.调整为大顶堆
+        //从最后一个非叶子结点开始直到根节点0，调整结构
         for (int i = arr.length / 2 - 1; i >= 0; i--) {
-            //从第一个非叶子结点从下至上，从右至左调整结构
             adjustHeap(arr, i, arr.length);
         }
         //2.调整堆结构+交换堆顶元素与末尾元素
-        for (int j = arr.length - 1; j > 0; j--) {
-            swap(arr, 0, j);//将堆顶元素与末尾元素进行交换
+        for (int subLen = arr.length - 1; subLen > 0; subLen--) {
+            swap(arr, 0, subLen);//将堆顶元素与末尾元素进行交换
 //            System.out.println(Arrays.toString(arr));
-            adjustHeap(arr, 0, j);//重新对堆进行调整
+            adjustHeap(arr, 0, subLen);//重新对堆进行调整
         }
 
     }
 
     /**
-     * 调整大顶堆（仅是调整过程，建立在大顶堆已构建的基础上）
+     * 调整大顶堆，需满足条件：i节点左右子树是最大堆
      */
     public static void adjustHeap(int[] arr, int i, int length) {
-        int temp = arr[i];//先取出当前元素i
-        for (int k = i * 2 + 1; k < length; k = k * 2 + 1) {//从i结点的左子结点开始，也就是2i+1处开始
-            if (k + 1 < length && arr[k] < arr[k + 1]) {//如果左子结点小于右子结点，k指向右子结点
-                k++;
+        int temp = arr[i];
+        for (int j = i * 2 + 1; j < length; j = j * 2 + 1) {//从i结点的左子结点开始，也就是2i+1处开始
+            if (j + 1 < length && arr[j + 1] > arr[j]) {//如果左子结点小于右子结点，j指向右子结点
+                j++;
             }
-            if (arr[k] > temp) {//如果子节点大于父节点，将子节点值赋给父节点（不用进行交换）
-                arr[i] = arr[k];
-                i = k;
+            if (arr[j] > temp) {//如果子节点大于父节点，将子节点值赋给父节点（不用进行交换）
+                arr[i] = arr[j];
+                i = j;//要调整的i节点往下降
             } else {
-                break;
+                break;//最大堆特性，下面的节点都小于temp
             }
         }
         arr[i] = temp;//将temp值放到最终的位置

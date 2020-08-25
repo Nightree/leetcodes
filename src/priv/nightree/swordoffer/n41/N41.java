@@ -32,7 +32,6 @@ public class N41 {
         MedianFinder medianFinder = new MedianFinder();
         medianFinder.addNum(1);
         medianFinder.addNum(3);
-        medianFinder.addNum(3);
         medianFinder.addNum(4);
         System.out.println(medianFinder.findMedian());
     }
